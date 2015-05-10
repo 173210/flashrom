@@ -200,6 +200,13 @@ int ft2232_spi_init(void)
 		} else if (!strcasecmp(arg, "232H")) {
 			ft2232_type = FTDI_FT232H_PID;
 			channel_count = 1;
+		} else if (!strcasecmp(arg, "adafruit")) {
+			ft2232_type = FTDI_FT232H_PID;
+			channel_count = 1;
+			/* Adafruit needs to enable its output via bit 6 / D6
+			* because it doesn't have any 3.3V output else. */
+			cs_bits |= 1 << 6;
+			pindir |= 1 << 6;
 		} else if (!strcasecmp(arg, "jtagkey")) {
 			ft2232_type = AMONTEC_JTAGKEY_PID;
 			channel_count = 2;
